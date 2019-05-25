@@ -1,0 +1,32 @@
+{
+"body":{
+  "responseId": "b8835488-16a1-4c30-8360-41a9fb1f69db-d2c275dc",
+  "queryResult": {
+    "queryText": "lksffsdfsesfhj",
+    "action": "input.unknown",
+    "parameters": {},
+    "allRequiredParamsPresent": true,
+    "fulfillmentText": "Je n'ai pas saisi ce que vous avez dit.",
+    "fulfillmentMessages": [
+      {
+        "text": {
+          "text": [
+            "Je n'ai pas saisi ce que vous avez dit."
+          ]
+        }
+      }
+    ],
+    "intent": {
+      "name": "projects/newagent-5ceec/agent/intents/ee83a7da-82bb-4ead-bd33-8c16b438959a",
+      "displayName": "Default Fallback Intent",
+      "isFallback": true
+    },
+    "intentDetectionConfidence": 1,
+    "languageCode": "fr"
+  },
+  "originalDetectIntentRequest": {
+    "payload": {}
+  },
+  "session": "projects/newagent-5ceec/agent/sessions/ae199080-bd89-07cb-7d5c-e5139b10e71f"
+}
+}

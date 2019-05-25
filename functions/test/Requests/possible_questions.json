@@ -1,0 +1,29 @@
+{
+"body":{
+  "responseId": "8d4f6167-ff50-4677-a850-6e8666637b44-d2c275dc",
+  "queryResult": {
+    "queryText": "qu'est ce que je peux demander?",
+    "parameters": {},
+    "allRequiredParamsPresent": true,
+    "fulfillmentMessages": [
+      {
+        "text": {
+          "text": [
+            ""
+          ]
+        }
+      }
+    ],
+    "intent": {
+      "name": "projects/newagent-5ceec/agent/intents/36785136-8b39-42a4-9c55-0e50cbf9db20",
+      "displayName": "PossibleQuestions"
+    },
+    "intentDetectionConfidence": 1,
+    "languageCode": "fr"
+  },
+  "originalDetectIntentRequest": {
+    "payload": {}
+  },
+  "session": "projects/newagent-5ceec/agent/sessions/ae199080-bd89-07cb-7d5c-e5139b10e71f"
+}
+}

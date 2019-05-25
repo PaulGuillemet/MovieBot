@@ -1,0 +1,32 @@
+{
+"body":{
+    "responseId": "633ae258-dbef-45a9-8e67-b80d1176fbb0-d2c275dc",
+    "queryResult": {
+      "queryText": "hi",
+      "action": "input.unknown",
+      "parameters": {},
+      "allRequiredParamsPresent": true,
+      "fulfillmentText": "Je crois que je ne vous suis pas.",
+      "fulfillmentMessages": [
+        {
+          "text": {
+            "text": [
+              "Je crois que je ne vous suis pas."
+            ]
+          }
+        }
+      ],
+      "intent": {
+        "name": "projects/newagent-5ceec/agent/intents/ee83a7da-82bb-4ead-bd33-8c16b438959a",
+        "displayName": "Default Fallback Intent",
+        "isFallback": true
+      },
+      "intentDetectionConfidence": 1,
+      "languageCode": "fr"
+    },
+    "originalDetectIntentRequest": {
+      "payload": {}
+    },
+    "session": "projects/newagent-5ceec/agent/sessions/ae199080-bd89-07cb-7d5c-e5139b10e71f"
+  }
+}
