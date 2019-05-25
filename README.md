@@ -1,6 +1,6 @@
 # Webhook Moviebot
 
-The webhook code is in Functions/index.js
+The webhook code is in functions/index.js
 
 The test code is in test/test.js
 
