@@ -6,14 +6,14 @@ const https = require('https');
 admin.initializeApp();
 
 // Returns the id in MovieDb of the film with the name that best matches the string given in input
-const getMovieId = function getMovieIdFromExternalAPI(nameToQuery) {
-  const path = `https://api.themoviedb.org/3/search/movie?query=${nameToQuery}&api_key=ba45a45375e8ef08fe8ec6ff5c27ceb5&language=fr`;
+const getMovieId = function getMovieIdFromExternalAPI(nameToQuery: string): Promise<number> {
+  const path: string = `https://api.themoviedb.org/3/search/movie?query=${nameToQuery}&api_key=ba45a45375e8ef08fe8ec6ff5c27ceb5&language=fr`;
   return new Promise((resolve, reject) => {
     https.get(path, (res) => {
-      let body = '';
-      res.on('data', (d) => { body += d; });
+      let body: string = '';
+      res.on('data', (d: string) => { body += d; });
       res.on('end', () => {
-        const response = JSON.parse(body);
+        const response: Object = JSON.parse(body);
         if (response != null
             && Object.prototype.hasOwnProperty.call(response, 'results')
             && Object.prototype.hasOwnProperty.call(response.results, 'length')
@@ -30,15 +30,15 @@ const getMovieId = function getMovieIdFromExternalAPI(nameToQuery) {
 };
 
 // Returns infos about the movie with the name that best matches the string given in input
-const getMovieInfo = function getMovieInfoFromExternalAPI(nameToQuery) {
+const getMovieInfo = function getMovieInfoFromExternalAPI(nameToQuery: string): Object {
   return new Promise((resolve, reject) => {
-    getMovieId(nameToQuery).then((id) => {
-      const path = `https://api.themoviedb.org/3/movie/${id}?api_key=ba45a45375e8ef08fe8ec6ff5c27ceb5&language=fr`;
+    getMovieId(nameToQuery).then((id: number) => {
+      const path: string = `https://api.themoviedb.org/3/movie/${id}?api_key=ba45a45375e8ef08fe8ec6ff5c27ceb5&language=fr`;
       https.get(path, (res) => {
-        let body = '';
-        res.on('data', (d) => { body += d; });
+        let body: string = '';
+        res.on('data', (d: string) => { body += d; });
         res.on('end', () => {
-          const response = JSON.parse(body);
+          const response: Object = JSON.parse(body);
           if (response != null && Object.prototype.hasOwnProperty.call(response, 'id')) {
             resolve(response);
           } else {
@@ -56,12 +56,12 @@ const getMovieInfo = function getMovieInfoFromExternalAPI(nameToQuery) {
 
 // EntryPoint
 exports.dialogflowFirebaseFulfillment = functions.https.onRequest(async (req, res) => {
-  const { session } = req.body;
-  const intent = req.body.queryResult.intent.displayName;
-  const text = req.body.queryResult.queryText;
-  const db = await admin.database().ref(`/${session}`);
+  const { session }: { session: string } = req.body;
+  const intent: string = req.body.queryResult.intent.displayName;
+  const text: string = req.body.queryResult.queryText;
+  const db: Object = await admin.database().ref(`/${session}`);
 
-  const done = new Promise((resolve, reject) => {
+  const done: Promise<string> = new Promise((resolve, reject) => {
     // We look in the db to get the context
     db.once('value', (snapshot) => {
       // First input received
@@ -76,7 +76,7 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest(async (req, re
       // When we don't know which movie yet
       } else if (!snapshot.val().set) {
         // Trying to find a movie matching the user input
-        getMovieInfo(text).then((response) => {
+        getMovieInfo(text).then((response: Object) => {
           db.set({ currentMovie: response, set: true, confirmed: false });
           resolve(`Le film ${response.title} sorti en ${(response.release_date).split('-')[0]}?`);
         }).catch(() => {
@@ -143,7 +143,7 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest(async (req, re
     });
   });
 
-  done.then((resp) => {
+  done.then((resp: string) => {
     res.json({ fulfillmentText: resp });
   }).catch(() => {
     res.json({ fulfillmentText: 'Veuillez m\'excuser mais il semble que j\'ai perdu mon cerveau, réessayez plus tard.' });

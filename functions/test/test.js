@@ -9,10 +9,10 @@ const movieInfos = require('./movie_infos.js');
 
 
 // Mocking the firebase db functions
-const databaseStub = sinon.stub();
-const refStub = sinon.stub();
-let dbReturn = null;
-let mockDB = function mockDatabase(str, cb) {
+const databaseStub: Object = sinon.stub();
+const refStub: Object = sinon.stub();
+let dbReturn: Object = null;
+let mockDB = function mockDatabase(str: string, cb: Function): void {
   cb({ val: () => dbReturn });
 };
 refStub.returns({ once: mockDB, set: () => {} });
@@ -23,8 +23,8 @@ Object.defineProperty(admin, 'database', { value: databaseStub });
 describe('Database not initialized', () => {
   it('Return introduction sentence when db is null', (done) => {
     dbReturn = null;
-    const resMock = {
-      json: (response) => {
+    const resMock: Object = {
+      json: (response: Object) => {
         assert.equal(response.fulfillmentText, 'Bonjour, je suis un bot conçu pour vous renseigner sur les films.\nQuel est le titre du film sur lequel vous souhaitez obternir des informations?');
         done();
       },
@@ -36,8 +36,8 @@ describe('Database not initialized', () => {
 describe('Movie not set', () => {
   it('User gives a string that matches a movie name', (done) => {
     dbReturn = { currentMovie: {}, set: false, confirmed: false };
-    const resMock = {
-      json: (response) => {
+    const resMock: Object = {
+      json: (response: Object) => {
         assert.equal(response.fulfillmentText, 'Le film Fight Club sorti en 1999?');
         done();
       },
@@ -47,8 +47,8 @@ describe('Movie not set', () => {
 
   it('User gives a string that matches no movie name', (done) => {
     dbReturn = { currentMovie: {}, set: false, confirmed: false };
-    const resMock = {
-      json: (response) => {
+    const resMock: Object = {
+      json: (response: Object) => {
         assert.equal(response.fulfillmentText, 'Je n\'ai pas trouvé de film avec ce titre. Quel est le titre exact du film?');
         done();
       },
@@ -60,8 +60,8 @@ describe('Movie not set', () => {
 describe('Movie set but not confirmed', () => {
   it('User confirms', (done) => {
     dbReturn = { currentMovie: movieInfos.fightClub, set: true, confirmed: false };
-    const resMock = {
-      json: (response) => {
+    const resMock: Object = {
+      json: (response: Object) => {
         assert.equal(response.fulfillmentText, 'Parfait, que voulez-vous savoir sur ce film?');
         done();
       },
@@ -71,8 +71,8 @@ describe('Movie set but not confirmed', () => {
 
   it('User does not confirm', (done) => {
     dbReturn = { currentMovie: movieInfos.fightClub, set: true, confirmed: false };
-    const resMock = {
-      json: (response) => {
+    const resMock: Object = {
+      json: (response: Object) => {
         assert.equal(response.fulfillmentText, 'Ah, de quel film voulez vous parlez alors?');
         done();
       },
@@ -84,8 +84,8 @@ describe('Movie set but not confirmed', () => {
 describe('Movie is set and confirmed', () => {
   it('User asks the budget', (done) => {
     dbReturn = { currentMovie: movieInfos.fightClub, set: true, confirmed: true };
-    const resMock = {
-      json: (response) => {
+    const resMock: Object = {
+      json: (response: Object) => {
         assert.equal(response.fulfillmentText, 'Le film a couté environ 63000000$.');
         done();
       },
@@ -95,8 +95,8 @@ describe('Movie is set and confirmed', () => {
 
   it('User asks the budget but this info is not available', (done) => {
     dbReturn = { currentMovie: movieInfos.noInfos, set: true, confirmed: true };
-    const resMock = {
-      json: (response) => {
+    const resMock: Object = {
+      json: (response: Object) => {
         assert.equal(response.fulfillmentText, 'Désolé, je ne connais pas le budget de ce film.');
         done();
       },
@@ -106,8 +106,8 @@ describe('Movie is set and confirmed', () => {
 
   it('User asks the summary', (done) => {
     dbReturn = { currentMovie: movieInfos.fightClub, set: true, confirmed: true };
-    const resMock = {
-      json: (response) => {
+    const resMock: Object = {
+      json: (response: Object) => {
         assert.equal(response.fulfillmentText, 'Le narrateur, sans identité précise, vit seul, travaille seul, dort seul, mange seul ses plateaux-repas pour une personne comme beaucoup d’autres personnes seules qui connaissent la misère humaine, morale et sexuelle. C’est pourquoi il va devenir membre du Fight club, un lieu clandestin où il va pouvoir retrouver sa virilité, l’échange et la communication. Ce club est dirigé par Tyler Durden, une sorte d’anarchiste entre gourou et philosophe qui prêche l’amour de son prochain.');
         done();
       },
@@ -117,8 +117,8 @@ describe('Movie is set and confirmed', () => {
 
   it('User asks the summary but this info is not available', (done) => {
     dbReturn = { currentMovie: movieInfos.noInfos, set: true, confirmed: true };
-    const resMock = {
-      json: (response) => {
+    const resMock: Object = {
+      json: (response: Object) => {
         assert.equal(response.fulfillmentText, 'Désolé, je ne sais pas de quoi parle ce film.');
         done();
       },
@@ -128,8 +128,8 @@ describe('Movie is set and confirmed', () => {
 
   it('User asks how the movie was rated', (done) => {
     dbReturn = { currentMovie: movieInfos.fightClub, set: true, confirmed: true };
-    const resMock = {
-      json: (response) => {
+    const resMock: Object = {
+      json: (response: Object) => {
         assert.equal(response.fulfillmentText, 'Le film a été noté 8.4/10 par les spectateurs.');
         done();
       },
@@ -139,8 +139,8 @@ describe('Movie is set and confirmed', () => {
 
   it('User asks how the movie was rated but this info is not available', (done) => {
     dbReturn = { currentMovie: movieInfos.noInfos, set: true, confirmed: true };
-    const resMock = {
-      json: (response) => {
+    const resMock: Object = {
+      json: (response: Object) => {
         assert.equal(response.fulfillmentText, 'Désolé, je n\'ai pas d\'avis spectateur pour ce film.');
         done();
       },
@@ -150,8 +150,8 @@ describe('Movie is set and confirmed', () => {
 
   it('User wants to talk about another movie', (done) => {
     dbReturn = { currentMovie: movieInfos.fightClub, set: true, confirmed: true };
-    const resMock = {
-      json: (response) => {
+    const resMock: Object = {
+      json: (response: Object) => {
         assert.equal(response.fulfillmentText, 'Quel est le titre du film?');
         done();
       },
@@ -161,8 +161,8 @@ describe('Movie is set and confirmed', () => {
 
   it('User wants to know what to ask', (done) => {
     dbReturn = { currentMovie: movieInfos.fightClub, set: true, confirmed: true };
-    const resMock = {
-      json: (response) => {
+    const resMock: Object = {
+      json: (response: Object) => {
         assert.equal(response.fulfillmentText, 'Vous pouvez me demander le budget, la note spectateur, ou le sujet de ce film.');
         done();
       },
@@ -172,8 +172,8 @@ describe('Movie is set and confirmed', () => {
 
   it('Cannot understand what the user wants', (done) => {
     dbReturn = { currentMovie: movieInfos.fightClub, set: true, confirmed: true };
-    const resMock = {
-      json: (response) => {
+    const resMock: Object = {
+      json: (response: Object) => {
         assert.equal(response.fulfillmentText, 'Je regrette mais je ne comprends pas, peut etre pourriez vous formuler autrement votre demande.');
         done();
       },
@@ -187,8 +187,8 @@ describe('An error is thrown during process', () => {
     dbReturn = { currentMovie: {}, set: false, confirmed: false };
     // To generate an error
     refStub.returns(null);
-    const resMock = {
-      json: (response) => {
+    const resMock: Object = {
+      json: (response: Object) => {
         assert.equal(response.fulfillmentText, 'Veuillez m\'excuser mais il semble que j\'ai perdu mon cerveau, réessayez plus tard.');
         done();
       },
@@ -199,12 +199,12 @@ describe('An error is thrown during process', () => {
   it('On error return of db.once ', (done) => {
     dbReturn = { currentMovie: {}, set: false, confirmed: false };
     // Throwing an error like the db.once function would do
-    mockDB = function mockDatabase(str, cb, cb2) {
+    mockDB = function mockDatabase(str: string, cb: Function, cb2: Function) {
       cb2();
     };
     refStub.returns({ once: mockDB, set: () => {} });
-    const resMock = {
-      json: (response) => {
+    const resMock: Object = {
+      json: (response: Object) => {
         assert.equal(response.fulfillmentText, 'Veuillez m\'excuser mais il semble que j\'ai perdu mon cerveau, réessayez plus tard.');
         done();
       },
