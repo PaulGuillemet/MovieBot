@@ -14,7 +14,10 @@ const getMovieId = function getMovieIdFromExternalAPI(nameToQuery) {
       res.on('data', (d) => { body += d; });
       res.on('end', () => {
         const response = JSON.parse(body);
-        if (response && response.results && response.results.length > 0) {
+        if (response != null
+            && Object.prototype.hasOwnProperty.call(response, 'results')
+            && Object.prototype.hasOwnProperty.call(response.results, 'length')
+            && response.results.length > 0) {
           resolve(response.results[0].id);
         } else {
           reject();
@@ -36,7 +39,7 @@ const getMovieInfo = function getMovieInfoFromExternalAPI(nameToQuery) {
         res.on('data', (d) => { body += d; });
         res.on('end', () => {
           const response = JSON.parse(body);
-          if (Object.prototype.hasOwnProperty.call(response, 'id')) {
+          if (response != null && Object.prototype.hasOwnProperty.call(response, 'id')) {
             resolve(response);
           } else {
             reject();
